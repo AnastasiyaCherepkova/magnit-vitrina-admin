@@ -63,14 +63,15 @@ a{color:var(--pencil)}
 .stage{display:flex;flex-wrap:wrap;gap:8px;align-items:center;background:var(--pencil-bg);border:1.5px dashed var(--pencil);border-radius:var(--r);padding:10px 12px;margin-bottom:14px}
 .stage .hand{margin-right:6px}
 
-.cols{display:grid;grid-template-columns:minmax(0,1fr) 360px;gap:16px;align-items:start}
+.cols{display:grid;grid-template-columns:minmax(0,1fr) 394px;gap:16px;align-items:start}
 .form{display:grid;gap:12px;min-width:0}
 .blk{background:var(--sheet);border:1.5px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px}
 .blk>header{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
 .field{display:grid;gap:5px}
 .field>label,.lbl{font-weight:500}
 .req::after{content:" *";color:var(--err)}
-.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.hint:empty,.hint>span:only-child:empty{min-height:18px}
 input[type=text],input[type=url],select{font:inherit;color:var(--ink);background:var(--sheet);border:1.5px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
 input.bad{border-color:var(--err)}
 .hint{font-size:12.5px;color:var(--muted);display:flex;justify-content:space-between;gap:8px}
@@ -80,7 +81,13 @@ input.bad{border-color:var(--err)}
 label.chip{display:inline-flex;align-items:center;gap:6px;border:1.5px solid var(--line);border-radius:8px;padding:7px 11px;cursor:pointer;background:var(--sheet);user-select:none}
 label.chip input{position:absolute;opacity:0;pointer-events:none}
 label.chip:has(input:checked){border-color:var(--ink);background:var(--fill);font-weight:600}
-label.chip.dis{opacity:.45;cursor:not-allowed}
+label.chip.dis{color:var(--muted);border-style:dashed;cursor:not-allowed}
+/* сильный тёмный тултип */
+[data-tip]{position:relative}
+[data-tip]:hover::after{content:attr(data-tip);position:absolute;left:50%;bottom:calc(100% + 8px);transform:translateX(-50%);background:#111214;color:#fff;font:500 12.5px/1.35 var(--f-body);padding:7px 10px;border-radius:8px;width:max-content;max-width:280px;white-space:pre-line;text-align:left;z-index:30;pointer-events:none;box-shadow:0 4px 14px rgba(0,0,0,.25)}
+[data-tip]:hover::before{content:"";position:absolute;left:50%;bottom:calc(100% + 2px);transform:translateX(-50%);border:6px solid transparent;border-top-color:#111214;border-bottom:0;z-index:30}
+input:disabled{background:var(--fill);color:var(--muted);cursor:not-allowed}
+.btn.sm{padding:6px 12px;font-size:13px}
 .sw{width:16px;height:16px;border-radius:50%;border:1px solid var(--line);display:inline-block;flex:none}
 .sw.rainbow{background:conic-gradient(#e34,#fb3,#4c6,#39f,#a4e,#e34)}
 .alert{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;background:var(--fill);border-radius:8px;padding:10px 10px 10px 12px;font-size:13px}
@@ -150,40 +157,49 @@ label.chip.dis{opacity:.45;cursor:not-allowed}
 .pv>header{justify-self:stretch;display:flex;justify-content:space-between;align-items:baseline}
 /* превью всегда в светлой теме приложения, независимо от темы страницы */
 .phone{--sheet:#FFFFFF;--paper:#F2F2F1;--fill:#E9E9E8;--fill2:#DADAD9;--ink:#3B3A3A;--muted:#8B8A89;--line:#E2E2E1;color:#3B3A3A}
-.phone{width:320px;max-width:100%;border:2px solid var(--ink);border-radius:30px;padding:12px 0 18px;background:var(--paper);overflow:hidden}
+.phone{width:364px;max-width:100%;border:2px solid var(--ink);border-radius:34px;padding:12px 0 18px;background:var(--paper);overflow:hidden;font-family:-apple-system,"SF Pro Text","Golos Text",Roboto,sans-serif}
 .phone .bar{height:14px;margin:0 16px 10px;border-radius:5px;background:var(--fill2);width:40%}
-.ghost{margin:0 12px 10px;height:34px;border-radius:8px;background:var(--fill)}
+.ghost{margin:0 16px 10px;height:34px;border-radius:8px;background:var(--fill)}
 .ghost.s{height:70px}
-/* shelf: 1px в превью = 1px макета × 0,889 (320/360) */
-.shelf{background:var(--sheet);margin:0 8px 10px;border-radius:18px;overflow:hidden;position:relative;isolation:isolate}
+/* shelf: 1:1 с макетом 360 px (Figma 15726:4260) */
+.shelf{background:var(--sheet);margin:0 0 10px;border-radius:28px;overflow:hidden;position:relative;isolation:isolate}
 .shelf .topmedia{background:var(--fill2);position:relative}
 .shelf .topmedia img,.shelf .topmedia video{width:100%;height:100%;object-fit:cover;display:block}
-.adlbl{position:absolute;right:6px;bottom:5px;font-size:8.5px;background:rgba(255,255,255,.85);color:#333;border-radius:4px;padding:1px 4px}
-.sh-head{padding:10px 14px 8px;display:grid;gap:1px;position:relative;z-index:1}
-.sh-head .r1{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.sh-head .ad{font-size:9px;color:var(--muted)}
-.sh-head .t{font-weight:700;font-size:15px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.sh-head .all{font-size:12px;font-weight:500;white-space:nowrap}
-.sh-head .st{font-size:11.5px;color:var(--muted);overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
-.sh-row{display:flex;gap:8px;overflow-x:auto;padding:0 14px 12px;position:relative;z-index:1;scrollbar-width:none}
+.adlbl{position:absolute;right:8px;bottom:8px;font-size:11px;line-height:12px;font-weight:500;background:rgba(255,255,255,.85);color:#747372;border-radius:4px;padding:2px 4px}
+.sh-head{padding:16px 16px 12px;display:grid;gap:8px;position:relative;z-index:1}
+.sh-head .tt{display:grid;min-width:0}
+.sh-head .r1{display:flex;justify-content:space-between;gap:16px;align-items:center;min-height:24px}
+.sh-head .ad{font-size:11px;line-height:12px;font-weight:500;justify-self:start}
+.sh-head .t{font-weight:700;font-size:18px;line-height:22px;overflow:hidden;white-space:nowrap;text-overflow:ellipsis}
+.sh-head .all{font-size:14px;line-height:20px;font-weight:500;white-space:nowrap;display:inline-flex;align-items:center}
+.sh-head .all svg{width:24px;height:24px;display:block}
+.sh-head .st{font-size:14px;line-height:20px;font-weight:500;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;justify-self:start;max-width:100%}
+.sh-row{display:flex;gap:8px;overflow-x:auto;padding:0 16px 16px 16px;position:relative;z-index:1;scrollbar-width:none;align-items:flex-start}
 .sh-row::-webkit-scrollbar{display:none}
-.pc{flex:none;width:121px;display:grid;gap:4px;align-content:start;border-radius:12px}
-.pc.wb{background:#fff;color:#262A31;padding:4px 4px 6px;border-radius:14px}
-.pc.wb .cd{color:#68707C} 
-.pc .m{width:100%;aspect-ratio:1;border-radius:10px;overflow:hidden;position:relative}
+.pc{flex:none;width:152px;display:flex;flex-direction:column}
+.pc.wb{background:#fff}
+/* без подложки (белый фон, 9:16, верхнее медиа): шапка снизу 4, ряд 0/16/8/8 без зазора — макеты 15730:4334, 14288:92367 */
+.shelf.nb .sh-head{padding-bottom:4px}
+.shelf.nb .sh-row{gap:0;padding:0 16px 8px 8px}
+.pc .m{width:100%;aspect-ratio:1;overflow:hidden;position:relative;flex:none}
+.pc .m{width:136px;margin:8px}
 .pc .m img{width:100%;height:100%;object-fit:cover;display:block}
-.pc .ct{font-weight:600;font-size:12px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.pc .cd{font-size:10.5px;color:var(--muted);padding:0 3px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:2.6em}
-.pc .cb{border:1px solid var(--line);border-radius:8px;text-align:center;font-size:11px;padding:4px;margin-top:2px;background:var(--sheet);color:var(--ink)}
-.pc .price{font-weight:700;font-size:13px;padding:0 3px;display:flex;gap:4px;align-items:baseline;flex-wrap:wrap}
-.pc .price s{font-weight:400;font-size:10px;color:var(--muted)}
-.pc .price em{font-style:normal;font-size:9.5px;color:var(--err);font-weight:600}
-.pc .rt{font-size:10px;color:var(--muted);padding:0 3px}
-.pc .lab{position:absolute;left:5px;bottom:5px;font-size:8.5px;border-radius:5px;padding:1px 5px;background:var(--fill2);color:var(--ink)}
-.v916{flex:none;width:121px;height:215px;border-radius:12px;overflow:hidden;position:relative}
+.pc .tx{display:grid;gap:4px;padding:0 12px 12px}
+.pc .ct{font-weight:700;font-size:16px;line-height:20px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.pc .cd{font-size:12px;line-height:14px;font-weight:500;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;min-height:28px}
+.pc .bt{padding:0 12px 12px}
+.pc .cb{height:32px;border:1px solid transparent;display:flex;align-items:center;justify-content:center;font-size:14px;line-height:16px;font-weight:500;padding:0 8px;white-space:nowrap;overflow:hidden}
+.pc .price{font-weight:700;font-size:16px;line-height:20px;display:flex;gap:4px;align-items:baseline;flex-wrap:wrap}
+.pc .price s{font-weight:400;font-size:12px;color:#8B8A89}
+.pc .price em{font-style:normal;font-size:12px;color:#EB1000;font-weight:600}
+.pc .rt{font-size:12px;line-height:14px;color:#8B8A89}
+.pc .lab{position:absolute;left:6px;bottom:6px;font-size:11px;border-radius:6px;padding:2px 6px;background:var(--fill2);color:var(--ink)}
+.v916{flex:none;width:153px;height:260px;padding:8px}
+.v916>.vm{width:137px;height:244px;overflow:hidden;position:relative}
+.v916 .adp{position:absolute;right:8px;bottom:8px;font-size:8px;line-height:12px;font-weight:500;color:#5D5C5B;background:rgba(255,255,255,.4);border-radius:100px;padding:2px 6px}
 .v916 img,.v916 video{width:100%;height:100%;object-fit:cover}
-.more{flex:none;width:70px;display:grid;place-items:center;align-content:center;gap:6px;font-size:11px;color:var(--muted);text-align:center}
-.more i{width:30px;height:30px;border-radius:50%;background:var(--sheet);border:1px solid var(--line);display:grid;place-items:center;font-style:normal;color:var(--ink)}
+.more{flex:none;width:124px;align-self:stretch;display:grid;place-items:center;align-content:center;padding:0 16px;font-size:14px;line-height:20px;font-weight:500;text-align:center;color:#3B3A3A}
+.more i{width:40px;height:40px;border-radius:50%;background:#fff;display:grid;place-items:center;font-style:normal;color:#3B3A3A;margin-bottom:8px}
 .ph{background-color:var(--fill);background-image:linear-gradient(to top right,transparent calc(50% - .75px),var(--fill2) calc(50% - .75px),var(--fill2) calc(50% + .75px),transparent calc(50% + .75px)),linear-gradient(to bottom right,transparent calc(50% - .75px),var(--fill2) calc(50% - .75px),var(--fill2) calc(50% + .75px),transparent calc(50% + .75px))}
 .ph.dark{background-color:var(--fill2);background-image:linear-gradient(to top right,transparent calc(50% - .75px),var(--line) calc(50% - .75px),var(--line) calc(50% + .75px),transparent calc(50% + .75px)),linear-gradient(to bottom right,transparent calc(50% - .75px),var(--line) calc(50% - .75px),var(--line) calc(50% + .75px),transparent calc(50% + .75px))}
 .bgimg{position:absolute;inset:0;background-size:cover;background-position:top center;z-index:0}
@@ -218,20 +234,17 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
 </style>
 </head>
 <body>
-
-
 <div class="wrap">
   <div class="top">
     <div>
       <h1>Инлайн-витрина в админке</h1>
-      <p class="lead">Страница заведения креатива «Инлайн-витрина» на шаге «Креатив». Серый прототип: на нём видно, какие поля менеджер заполняет, что подтягивается само, а что зашито в компонент и в форму не попадает.</p>
+      <p class="lead">Прототип для дизайна страницы заведения инлайн-витрины в админке.</p>
     </div>
   </div>
 
   <div class="tabs" role="tablist">
     <button class="tab" role="tab" id="t-proto" aria-selected="true" data-tab="proto">Прототип</button>
     <button class="tab" role="tab" id="t-spec" aria-selected="false" data-tab="spec">Спецификация полей</button>
-    <button class="tab" role="tab" id="t-stage" aria-selected="false" data-tab="stage">Этап 1: первые витрины</button>
   </div>
 
   <!-- ============ ПРОТОТИП ============ -->
@@ -247,16 +260,18 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
         <div class="steps"><b><i>✓</i>Кампания</b><hr><b><i>✓</i>Группы</b><hr><b class="on"><i>3</i>Креатив</b></div>
 
         <div class="stage">
-          <span class="hand">Посмотреть как:</span>
-          <label class="chip"><input type="radio" name="stage" id="st1" value="1" checked>Этап 1 — запуск</label>
-          <label class="chip"><input type="radio" name="stage" id="st2" value="2">Этап 2 — целевая версия</label>
-          <span class="muted" id="stageHint" style="font-size:12.5px"></span>
+          <span class="lbl">Версия страницы:</span>
+          <label class="chip"><input type="radio" name="ver" id="ver1" value="1" checked>Задача 1 · промо-витрина</label>
+          <label class="chip"><input type="radio" name="ver" id="ver2" value="2">Задача 2 · товарная витрина</label>
+          <span style="flex:1"></span>
+          <button type="button" class="btn sm" id="fillDemo">Заполнить тестовыми данными</button>
+          <button type="button" class="btn sm" id="clearAll">Очистить</button>
         </div>
 
         <div class="cols">
           <form class="form" id="f" novalidate>
             <div class="blk">
-              <header><h3>Тип креатива</h3><span class="muted" style="font-size:12.5px">как во вкладках «Выбор типов креативов»</span></header>
+              <header><h3>Тип креатива</h3></header>
               <div class="chips">
                 <label class="chip dis"><input type="radio" disabled>Баннер</label>
                 <label class="chip dis"><input type="radio" disabled>Сторис</label>
@@ -265,7 +280,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
               </div>
               <div class="field">
                 <label class="req" for="cname">Название креатива</label>
-                <input type="text" id="cname" value="Витрина «Молочные новинки» — октябрь">
+                <input type="text" id="cname" placeholder="Введите название">
                 <div class="hint"><span>Видно только в админке</span></div>
               </div>
             </div>
@@ -296,20 +311,20 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
               <header><h3>Шапка витрины</h3></header>
               <div class="field">
                 <label class="req" for="title">Заголовок витрины</label>
-                <input type="text" id="title" value="Молочные новинки" data-max="20">
+                <input type="text" id="title" placeholder="Введите заголовок" data-max="20">
                 <div class="hint"><span></span><span class="cnt"></span></div>
               </div>
               <div class="field" id="fSub">
                 <label class="toggle" for="subOn" id="subToggle"><input type="checkbox" id="subOn" checked><span>Подзаголовок витрины</span></label>
                 <div class="field" id="subWrap">
                   <label for="sub" id="subLbl">Подзаголовок витрины</label>
-                  <input type="text" id="sub" value="Попробуйте раньше всех" data-max="34">
-                  <div class="hint"><span>Одна строка</span><span class="cnt"></span></div>
+                  <input type="text" id="sub" placeholder="Введите подзаголовок" data-max="34">
+                  <div class="hint"><span></span><span class="cnt"></span></div>
                 </div>
               </div>
               <div class="field">
                 <label class="req" for="link">Ссылка витрины</label>
-                <input type="url" id="link" value="https://magnit.ru/promo/moloko-novinki">
+                <input type="url" id="link" placeholder="Введите ссылку">
                 <div class="hint"><span>Куда ведут заголовок, «Все» и «Смотреть все» в конце ряда</span></div>
               </div>
               <label class="toggle" for="markOn"><input type="checkbox" id="markOn" checked><span>Маркировка «Реклама»<br><span class="muted" style="font-size:12.5px">ERID из ОРД. Выключают, если витрина не рекламная, например у ретейлера для своих товаров</span></span></label>
@@ -344,7 +359,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
                 <div class="up" id="up916"></div>
                 <div class="field">
                   <label class="req" for="link916">Ссылка баннера</label>
-                  <input type="url" id="link916" placeholder="https://">
+                  <input type="url" id="link916" placeholder="Введите ссылку">
                   <div class="hint"><span>Акция, подборка, страница поставщика</span></div>
                 </div>
               </div>
@@ -352,7 +367,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
 
             <div class="blk">
               <header><h3>Карточки</h3><span class="muted" id="cardCount" style="font-size:12.5px"></span></header>
-              <div class="field">
+              <div class="field" id="fCtype">
                 <span class="lbl">Тип карточек</span>
                 <div class="chips" id="ctChips">
                   <label class="chip"><input type="radio" name="ctype" value="click" checked>Click out</label>
@@ -366,11 +381,15 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
                 <span class="lbl">Что показывать в карточках</span>
                 <div class="roles" id="cardRoles"></div>
               </div>
+              <div class="field" id="fBtnText">
+                <label class="req" for="btnText">Текст кнопки</label>
+                <input type="text" id="btnText" placeholder="Введите текст" data-max="10">
+                <div class="hint"><span>Общий для всех карточек</span><span class="cnt"></span></div>
+              </div>
               <p class="note" id="cbgNote"></p>
               <div class="cards" id="cards"></div>
               <button type="button" class="add" id="addCard">+ Добавить карточку</button>
-              <p class="note">Карточек до 10. На 10-й кнопка «Добавить» выключается с подсказкой «Можно не больше 10 карточек».</p>
-              <div class="fixed"><span>«Смотреть все» в конце ряда — всегда, ведёт на ссылку витрины</span></div>
+              <p class="note" id="limNote"></p>
             </div>
 
             <div class="blk" id="bStyle">
@@ -384,8 +403,8 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
                 <div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;align-items:baseline">
                   <span class="lbl">Цвета текста и кнопок</span>
                   <span class="chips" style="gap:4px"><span class="muted" style="font-size:12.5px">весь текст на фоне витрины:</span>
-                    <button type="button" class="mini" data-preset="dark"><i class="sw" style="background:#3B3A3A"></i>Тёмный</button>
-                    <button type="button" class="mini" data-preset="light"><i class="sw" style="background:#FFFFFF"></i>Светлый</button></span>
+                    <button type="button" class="mini" data-preset="dark" data-tip="Заголовок, подзаголовок, тексты карточек — #3B3A3A (text/primary)&#10;«Все» — #272626&#10;«Реклама» — #747372 (text/secondary)"><i class="sw" style="background:#3B3A3A"></i>Тёмный</button>
+                    <button type="button" class="mini" data-preset="light" data-tip="Заголовок, подзаголовок, «Все», тексты карточек — #FFFFFF (text/invert/primary)&#10;«Реклама» — #747372 (text/secondary)"><i class="sw" style="background:#FFFFFF"></i>Светлый</button></span>
                 </div>
                 <div class="colors" id="colors"></div>
               </div>
@@ -424,6 +443,18 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
       </section>
 
       <section>
+        <h3>Две задачи</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Задача</th><th>Что входит</th></tr></thead>
+          <tbody>
+            <tr><td>1. Промо-витрина</td><td>Вся страница: вид витрины (базовая или с верхним медиа), шапка, фон, баннер 9:16, карточки Click out (картинка, заголовок, описание, кнопка, ссылка), оформление. Выбора типа карточек нет.</td></tr>
+            <tr><td>2. Товарная витрина</td><td>Над списком карточек появляется выбор типа: Click out или Товарная. Товарная карточка: менеджер выбирает товар по названию или артикулу, картинка, цена, скидка, название, рейтинг и ссылка подтягиваются из каталога. Тумблеры «Скидка» и «Рейтинг», в оформлении — цвет цены.</td></tr>
+          </tbody>
+        </table></div>
+        <p class="muted">Обе — инлайн-витрины, сразу в целевой версии. Переключатель «Версия страницы» в прототипе показывает, как страница выглядит в каждой задаче.</p>
+      </section>
+
+      <section>
         <h3>Главный принцип</h3>
         <ul class="clean">
           <li>Витрину будут заводить разные ретейлеры и поставщики, поэтому форма строится по двум таблицам гайда: <b>контент-роли</b> (что есть в витрине) и <b>параметры</b> (что и как можно задать).</li>
@@ -442,7 +473,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
           <tbody>
             <tr class="grp"><td colspan="4">Витрина</td></tr>
             <tr><td>Заголовок витрины</td><td><span class="pill y">обяз.</span></td><td><span class="pill y">обяз.</span></td><td>поле *, 20 симв.</td></tr>
-            <tr><td>Подзаголовок витрины</td><td><span class="pill a">тумблер</span></td><td><span class="pill a">тумблер</span></td><td>тумблер + поле; 34 симв. (этап 1: 44, у базовой роли нет)</td></tr>
+            <tr><td>Подзаголовок витрины</td><td><span class="pill a">тумблер</span></td><td><span class="pill a">тумблер</span></td><td>тумблер + поле; 34 симв.</td></tr>
             <tr><td>Маркировка</td><td><span class="pill a">тумблер</span></td><td><span class="pill a">тумблер</span></td><td>тумблер «Маркировка „Реклама“», ERID из ОРД</td></tr>
             <tr><td>Медиа сверху</td><td><span class="pill x">нет роли</span></td><td><span class="pill y">обяз.</span></td><td>блок «Верхнее медиа»</td></tr>
             <tr><td>Баннер 9:16 на первой позиции</td><td><span class="pill a">тумблер</span></td><td><span class="pill x">недоступен</span></td><td>тумблер + загрузка + ссылка</td></tr>
@@ -452,11 +483,11 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
             <tr class="grp"><td colspan="4">Карточка Click out</td></tr>
             <tr><td>Медиа карточки</td><td colspan="2"><span class="pill y">обяз.</span></td><td>загрузка 1:1 *</td></tr>
             <tr><td>Заголовок карточки</td><td colspan="2"><span class="pill a">тумблер</span></td><td>тумблер на все карточки; 14 симв.</td></tr>
-            <tr><td>Кнопка карточки</td><td colspan="2"><span class="pill a">тумблер</span></td><td>тумблер на все карточки; 10 симв.</td></tr>
+            <tr><td>Кнопка карточки</td><td colspan="2"><span class="pill a">тумблер</span></td><td>тумблер на все карточки; текст один на все кнопки — поле «Текст кнопки» в блоке «Карточки», 10 симв.; в карточке поле показано выключенным</td></tr>
             <tr><td>Ссылка карточки</td><td colspan="2"><span class="pill y">обяз.</span></td><td>поле *</td></tr>
             <tr><td>Подзаголовок (описание)</td><td colspan="2"><span class="pill y">обяз.</span></td><td>поле *, 33 симв.</td></tr>
             <tr><td>Фон карточки</td><td colspan="2">белый / без фона</td><td>поля нет: белая подложка при фоне «Цвет» или «Картинка», без подложки при белом фоне и баннере 9:16</td></tr>
-            <tr class="grp"><td colspan="4">Карточка товарная</td></tr>
+            <tr class="grp"><td colspan="4">Карточка товарная · товарная витрина</td></tr>
             <tr><td>Медиа, цена, название, кнопка, ссылка</td><td colspan="2"><span class="pill y">обяз.</span></td><td>из каталога по выбранному товару</td></tr>
             <tr><td>Скидка (лейбл + старая цена)</td><td colspan="2"><span class="pill a">тумблер</span></td><td>тумблер на всю витрину; данные из каталога</td></tr>
             <tr><td>Рейтинг</td><td colspan="2"><span class="pill a">тумблер</span></td><td>тумблер на всю витрину; если у одного товара рейтинга нет — скрыт у всех</td></tr>
@@ -477,17 +508,17 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
             <tr><td>Фон витрины</td><td>на выбор</td><td>чипы: белый / цвет / картинка</td><td>белый</td></tr>
             <tr><td>Скругление витрины</td><td>вручную</td><td>число, px</td><td class="mono">corner/28 = 28</td></tr>
             <tr class="grp"><td colspan="4">Карточка</td></tr>
-            <tr><td>Тексты карточки Click out</td><td>вручную</td><td>поля в каждой карточке</td><td>—</td></tr>
-            <tr><td>Тексты товарной карточки</td><td>из каталога</td><td>нет</td><td>—</td></tr>
-            <tr><td>Скругление медиа карточки</td><td>вручную</td><td>число, px</td><td class="mono">corner/20 = 20</td></tr>
+            <tr><td>Тексты карточки Click out</td><td>вручную</td><td>заголовок и описание — в каждой карточке; текст кнопки — одно поле на все карточки</td><td>—</td></tr>
+            <tr><td>Тексты товарной карточки <span class="pill a">товарная витрина</span></td><td>из каталога</td><td>нет</td><td>—</td></tr>
+            <tr><td>Скругление карточки</td><td>вручную</td><td>число, px</td><td class="mono">12 (как в макете)</td></tr>
             <tr><td>Скругление кнопки</td><td>вручную</td><td>число, px</td><td class="mono">button/radius/small = 12</td></tr>
             <tr><td>Вид кнопки</td><td>на выбор из ДС или свой</td><td>чипы кнопок ДС: Border / Primary / Secondary; палитра для своего цвета фона; отдельно цвет текста кнопки</td><td><b>Border</b> (по умолчанию): прозрачный фон, обводка <span class="mono">button/border/default #F0F0EF</span>, текст #3B3A3A. <b>Primary</b>: <span class="mono">#EB1000</span>, текст #F5F5F4. <b>Secondary</b>: <span class="mono">#F0F0EF</span>, текст #3B3A3A. Источник: Pole Mobile 2.0, Button / Base</td></tr>
             <tr class="grp"><td colspan="4">Цвета текста</td></tr>
-            <tr><td>Каждый текст витрины: заголовок, подзаголовок, «Все», маркировка, заголовок карточки, описание или название, цена</td><td>настраивается</td><td>строка в блоке «Оформление»: быстрый выбор «Тёмный» / «Светлый» + палитра + HEX + контраст</td><td class="mono">text/primary #3B3A3A, text/secondary #8B8A89, «Все» #272626</td></tr>
+            <tr><td>Каждый текст витрины: заголовок, подзаголовок, «Все», маркировка, заголовок карточки, описание или название, цена</td><td>настраивается</td><td>строка в блоке «Оформление»: быстрый выбор «Тёмный» / «Светлый» + палитра + HEX + контраст</td><td class="mono">заголовок, подзаголовок, тексты карточки — text/primary #3B3A3A; «Реклама» — text/secondary #747372; «Все» #272626. Светлый вариант — text/invert/primary #FFFFFF</td></tr>
             <tr><td>Быстрый выбор для всего текста на фоне витрины</td><td>одной кнопкой</td><td>«Тёмный» / «Светлый» над списком цветов</td><td>меняет шапку и тексты карточек без белой подложки</td></tr>
           </tbody>
         </table></div>
-        <p class="muted">Светлый вторичный текст в прототипе #E6E6E5 — <span class="hand">сверить с токеном invert в ДС</span>. Дефолты скруглений взяты из переменных макета витрины — <span class="hand">сверить, какой токен на каком элементе</span>.</p>
+        <p class="muted">Цвета и скругления взяты из макета витрины (Figma 15726:4259, 15726:4260).</p>
       </section>
 
       <section>
@@ -496,9 +527,9 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
           <thead><tr><th>Что</th><th>Откуда значение</th></tr></thead>
           <tbody>
             <tr><td>Текст «Все»</td><td>Постоянный</td></tr>
-            <tr><td>ERID и место маркировки</td><td>ERID из ОРД. С верхним медиа маркировка на картинке; базовая: этап 1 — под заголовком, этап 2 — над заголовком</td></tr>
+            <tr><td>ERID и место маркировки</td><td>ERID из ОРД. С верхним медиа маркировка на картинке, у базовой витрины — над заголовком</td></tr>
             <tr><td>Карточка «Смотреть все» в конце ряда</td><td>Всегда есть, ведёт на ссылку витрины; анимация pull to open из компонента</td></tr>
-            <tr><td>Белая подложка карточек</td><td>По фону витрины (см. «Контент-роли»). Скругление подложки = скругление медиа + 4 (отступ внутри)</td></tr>
+            <tr><td>Белая подложка карточек</td><td>По фону витрины (см. «Контент-роли»). Скругление подложки = скругление карточки (12). Картинка внутри с отступом 8, её скругление = 12 − 8 = 4. Без подложки скругление картинки = 12</td></tr>
             <tr><td>Шрифты, кегли, отступы</td><td>Компонент</td></tr>
             <tr><td>Данные товарной карточки</td><td>Каталог</td></tr>
           </tbody>
@@ -511,13 +542,12 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
         <div class="tbl"><table>
           <thead><tr><th>Что</th><th>Размер в макете</th><th>Загружать</th><th>Пропорции</th><th>Формат и вес</th></tr></thead>
           <tbody>
-            <tr><td>Фон базовой витрины, этап 1</td><td class="mono">360×328</td><td class="mono">720×656</td><td class="mono">45:41</td><td>JPG, PNG · до 2 МБ</td></tr>
-            <tr><td>Фон базовой витрины, этап 2</td><td class="mono">360×366</td><td class="mono">720×732</td><td class="mono">60:61</td><td>JPG, PNG · до 2 МБ</td></tr>
+            <tr><td>Фон базовой витрины</td><td class="mono">360×366</td><td class="mono">720×732</td><td class="mono">60:61</td><td>JPG, PNG · до 2 МБ</td></tr>
             <tr><td>Верхнее медиа, низкое</td><td class="mono">360×112</td><td class="mono">720×224</td><td class="mono">45:14</td><td>JPG, PNG · до 2 МБ</td></tr>
             <tr><td>Верхнее медиа, высокое</td><td class="mono">360×150</td><td class="mono">720×300</td><td class="mono">12:5</td><td>JPG, PNG · до 2 МБ</td></tr>
             <tr><td>Верхнее видео</td><td class="mono">360×203</td><td class="mono">от 360×203 до 1920×1080</td><td class="mono">16:9</td><td>MP4, MKV, MOV · до 50 МБ · до 30 с (лучше 15) · 20–30 FPS</td></tr>
-            <tr><td>Баннер 9:16, картинка</td><td class="mono">135×240</td><td class="mono">270×480</td><td class="mono">9:16</td><td>JPG, PNG · до 2 МБ</td></tr>
-            <tr><td>Баннер 9:16, видео</td><td class="mono">135×240</td><td class="mono">от 135×240 до 1080×1920</td><td class="mono">9:16</td><td>MP4, MKV, MOV · до 50 МБ · до 30 с · 20–30 FPS</td></tr>
+            <tr><td>Баннер 9:16, картинка</td><td class="mono">135×240, растёт пропорционально (на 360 — 137×244)</td><td class="mono">270×480</td><td class="mono">9:16</td><td>JPG, PNG · до 2 МБ</td></tr>
+            <tr><td>Баннер 9:16, видео</td><td class="mono">135×240, растёт пропорционально</td><td class="mono">от 135×240 до 1080×1920</td><td class="mono">9:16</td><td>MP4, MKV, MOV · до 50 МБ · до 30 с · 20–30 FPS</td></tr>
             <tr><td>Картинка карточки Click out</td><td class="mono">136×136</td><td class="mono">от 272×272</td><td class="mono">1:1</td><td>JPG, PNG · до 2 МБ</td></tr>
           </tbody>
         </table></div>
@@ -532,6 +562,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
           <li><b>Тумблер необязательной роли</b> сразу прячет или показывает поле во всех карточках и в предпросмотре. Выключенная роль не уходит в публикацию, введённый текст сохраняется до выхода со страницы.</li>
           <li><b>Проверка файла</b> сразу после загрузки: пропорции (допуск 2 %), вес, формат, длительность видео. Ошибка под полем говорит, что не так и какой нужен размер: «Нужно 45:14, загружено 16:9. Загрузите 720×224».</li>
           <li><b>Карточки в форме</b> — нейтральные блоки, без зелёной и красной подсветки. Как показывать незаполненные поля после нажатия «Опубликовать», решает дизайнер по паттернам админки.</li>
+          <li><b>Количество карточек:</b> от 1 до 15. Под списком подсказка «Можно до 15 карточек, рекомендуем не больше 8». С 9-й карточки она меняется на предупреждение: дальше ряд почти не долистывают. Публикацию не блокирует. На 15-й кнопка «Добавить карточку» выключается.</li>
           <li><b>«Опубликовать»</b> неактивна, пока не заполнены обязательные поля. «Сохранить как черновик» доступна всегда.</li>
           <li><b>Смена вида витрины</b> не стирает введённые данные: скрытые поля просто не уходят в публикацию.</li>
           <li><b>Смена типа карточек</b> ничего не стирает: карточки каждого типа хранятся отдельно, при возврате к типу они на месте. В публикацию уходят карточки выбранного типа. По умолчанию в новой витрине две карточки.</li>
@@ -541,71 +572,7 @@ ul.clean{margin:0;padding-left:18px;display:grid;gap:4px;max-width:75ch}
 
       <section>
         <h3>Как расширять типы карточек</h3>
-        <p class="intro">Тип карточек — переключатель над списком. Каждый тип приносит свой набор полей внутри плашки карточки, остальная страница не меняется. Сейчас: Click out и Товарная. Следующие (купон, рецепт и т. д.) добавляются новым чипом и своей плашкой.</p>
-      </section>
-    </div>
-  </div>
-
-  <!-- ============ ЭТАП 1 ============ -->
-  <div id="stage" role="tabpanel" hidden>
-    <div class="doc">
-      <section class="intro">
-        <h2>Этап 1: заводим витрины, которые уже в разработке</h2>
-        <p>Две витрины Click out уже сделаны разработкой. Их заводим первыми. Параметры в админке те же, что у целевой витрины, отличаются только подзаголовок, место плашки «Реклама» и размер фона. Товарная карточка — следующей доработкой. В прототипе это режим «Этап 1 — запуск».</p>
-      </section>
-      <div class="two">
-        <div class="sheetbox">
-          <h3>Группа 1 → «Базовая»</h3>
-          <div class="schema">
-            <div class="frame" style="height:219px">
-              <div class="ph" style="position:absolute;inset:0"></div>
-              <span class="dim" style="position:absolute;top:-18px;left:0;right:0;text-align:center">360</span>
-              <span class="dim" style="position:absolute;right:-34px;top:45%">328</span>
-            </div>
-            <span class="muted" style="font-size:12.5px">шапка 60 + ряд карточек 268</span>
-          </div>
-          <ul class="clean">
-            <li>Заголовок 20 симв., подзаголовка нет.</li>
-            <li>Плашка «Реклама» — под заголовком.</li>
-            <li>Фон: белый, цвет или картинка. При цвете и картинке у карточек белая подложка, при белом — без подложки.</li>
-            <li>Цвета текстов, кнопок и скругления настраиваются так же, как в целевой версии.</li>
-            <li><b>Картинка фона: 720×656 (макет 360×328, 45:41), до 2 МБ.</b> Этого размера раньше не было в гайде.</li>
-            <li>Баннер 9:16 первым — можно, тогда фон только белый, а заголовок у этой карточки не показывается.</li>
-            <li>Карточка: картинка 1:1, заголовок 14 (необяз.), описание 33, кнопка 10, ссылка.</li>
-          </ul>
-        </div>
-        <div class="sheetbox">
-          <h3>Группа 2 → «С верхним медиа»</h3>
-          <div class="schema">
-            <div class="frame" style="height:299px;background:var(--sheet)">
-              <div class="ph dark" style="height:75px"></div>
-              <span class="dim" style="position:absolute;top:-18px;left:0;right:0;text-align:center">360</span>
-              <span class="dim" style="position:absolute;right:-34px;top:25px">112</span>
-              <span class="dim" style="position:absolute;right:-34px;top:55%">448</span>
-            </div>
-            <span class="muted" style="font-size:12.5px">медиа 112 + шапка 68 + ряд 268</span>
-          </div>
-          <ul class="clean">
-            <li>Верхнее медиа, три размера: картинка 720×224 (45:14), картинка 720×300 (12:5) или видео 16:9 (360×203).</li>
-            <li>Заголовок 20, подзаголовок 44 (необяз.).</li>
-            <li>Плашка «Реклама» — на картинке.</li>
-            <li>Фон только белый, баннера 9:16 нет.</li>
-            <li>Карточка: картинка 1:1, заголовок 14 (необяз.), описание 33, кнопка 10, ссылка.</li>
-          </ul>
-        </div>
-      </div>
-      <section>
-        <h3>Что меняется на этапе 2</h3>
-        <div class="tbl"><table>
-          <thead><tr><th>Что</th><th>Этап 1</th><th>Этап 2</th></tr></thead>
-          <tbody>
-            <tr><td>Типы карточек</td><td>Click out</td><td>Click out, Товарная, дальше другие</td></tr>
-            <tr><td>Подзаголовок</td><td>только «С верхним медиа», 44 симв.</td><td>оба вида, тумблер вкл/выкл, 34 симв.</td></tr>
-            <tr><td>Плашка «Реклама» в базовой</td><td>под заголовком</td><td>над заголовком</td></tr>
-            <tr><td>Фон базовой витрины</td><td class="mono">720×656</td><td class="mono">720×732</td></tr>
-            <tr><td>Всё остальное (верхнее медиа в трёх размерах, фон, баннер 9:16, до 10 карточек)</td><td>одинаково</td><td>одинаково</td></tr>
-          </tbody>
-        </table></div>
+        <p class="intro">Тип карточек — переключатель над списком. Каждый тип приносит свой набор полей внутри плашки карточки, остальная страница не меняется. В промо-витрине тип один — Click out, выбора типа нет. В товарной витрине появляется выбор: Click out или Товарная. Следующие (купон, рецепт и т. д.) добавляются новым чипом и своей плашкой.</p>
       </section>
     </div>
   </div>
@@ -620,7 +587,7 @@ const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&g
 /* tabs */
 $$('.tab').forEach(b=>b.addEventListener('click',()=>{
   $$('.tab').forEach(x=>x.setAttribute('aria-selected',x===b));
-  ['proto','spec','stage'].forEach(id=>$('#'+id).hidden=id!==b.dataset.tab);
+  ['proto','spec'].forEach(id=>$('#'+id).hidden=id!==b.dataset.tab);
   try{localStorage.setItem('va-tab',b.dataset.tab)}catch(e){}
 }));
 try{const t=localStorage.getItem('va-tab'); if(t){const b=$(`.tab[data-tab="${t}"]`); b&&b.click();}}catch(e){}
@@ -637,27 +604,28 @@ const CATALOG=[
 
 /* state */
 const S={
-  stage:1, variant:'base', topType:'image', topSize:'112', topFile:null,
-  bg:'color', bgFile:null, on916:false, t916:'image', file916:null, ctype:'click',
+  stage:2, ver:1, variant:'base', topType:'image', topSize:'112', topFile:null,
+  bg:'white', bgFile:null, on916:false, t916:'image', file916:null, ctype:'click',
   // необязательные контент-роли (обязательные не выключаются)
   roles:{ctitle:true,cbtn:true,disc:true,rating:true},
   radius:null, colors:null,
-  cards:[
-    {img:'#c7d7b0',title:'Актибио',desc:'Новый вкус — манго и маракуйя',btn:'Купить',link:'https://magnit.ru/p/1'},
-    {img:'#d9c7b0',title:'Простоквашино',desc:'Молоко с фермы рядом',btn:'Купить',link:'https://magnit.ru/p/2'},
-  ],
+  btnText:'',
+  cards:[{img:null,title:'',desc:'',link:''},{img:null,title:'',desc:'',link:''}],
   // карточки каждого типа хранятся отдельно: при переключении типа ничего не теряется
-  saved:{product:[{sku:'1000234567'},{sku:'1000456789'}]}
+  saved:{product:[{q:''},{q:''}]}
 };
-const LIM={min:1,max:10};
+const LIM={min:1,max:15,rec:8};
 /* значения ДС «Магнита» (токены из макета витрины) */
 // кнопки ДС «Магнита» (Pole Mobile 2.0): Border — как в макете витрины, Primary и Secondary — Button / Base
 const BTN={border:{nm:'Border',bg:'transparent',text:'#3B3A3A',border:'#F0F0EF'},primary:{nm:'Primary',bg:'#EB1000',text:'#F5F5F4',border:''},secondary:{nm:'Secondary',bg:'#F0F0EF',text:'#3B3A3A',border:''}};
-const DS_RADIUS={shelf:28,media:20,btn:12};
-const DS_COLORS={title:'#3B3A3A',sub:'#8B8A89',all:'#272626',mark:'#8B8A89',ctitle:'#3B3A3A',price:'#3B3A3A',cdesc:'#8B8A89',btnText:'#3B3A3A',btnBg:'#FFFFFF'};
-const LIGHT={title:'#FFFFFF',sub:'#E6E6E5',all:'#FFFFFF',mark:'#E6E6E5',ctitle:'#FFFFFF',price:'#FFFFFF',cdesc:'#E6E6E5'};
+const DS_RADIUS={shelf:28,media:12,btn:12};
+const DS_COLORS={title:'#3B3A3A',sub:'#3B3A3A',all:'#272626',mark:'#747372',ctitle:'#3B3A3A',price:'#3B3A3A',cdesc:'#3B3A3A',btnText:'#3B3A3A',btnBg:'#FFFFFF'};
+// токены ДС для тултипа в превью (макет 15726:4259)
+const TOKENS={'#3B3A3A':'text/primary','#747372':'text/secondary','#FFFFFF':'text/invert/primary'};
+// светлый вариант из макета: «Реклама» остаётся text/secondary
+const LIGHT={title:'#FFFFFF',sub:'#FFFFFF',all:'#FFFFFF',mark:'#747372',ctitle:'#FFFFFF',price:'#FFFFFF',cdesc:'#FFFFFF'};
 S.radius={...DS_RADIUS}; S.colors={...DS_COLORS}; S.btnStyle='border';
-const RADII=[{k:'shelf',nm:'Витрина',tok:'corner/28'},{k:'media',nm:'Медиа карточки',tok:'corner/20'},{k:'btn',nm:'Кнопка карточки',tok:'button/radius/small'}];
+const RADII=[{k:'shelf',nm:'Витрина',tok:'corner/28'},{k:'media',nm:'Карточка',tok:''},{k:'btn',nm:'Кнопка карточки',tok:'button/radius/small'}];
 const DEMO_COLORS=['#c9d6e8','#e8d3c9','#d4e8c9','#e6e0c4','#d9cfe8','#c4e2e0'];
 
 /* --- upload widget --- */
@@ -702,12 +670,11 @@ function bindCounter(inp){
     const c=inp.parentElement.querySelector('.cnt'); if(c) c.textContent=`${inp.value.length} / ${max}`;};
   inp.addEventListener('input',upd); upd();
 }
-['#title','#sub'].forEach(s=>bindCounter($(s)));
+['#title','#sub','#btnText'].forEach(s=>bindCounter($(s)));
 
 /* --- stage/variant visibility --- */
 function applyVisibility(){
   const st=S.stage, base=S.variant==='base';
-  $('#stageHint').textContent=st===1?'Click out · подзаголовок только с верхним медиа · фон 720×656':'+ товарная карточка · подзаголовок везде, включается тумблером · фон 720×732';
   $('#subLbl').hidden=true;
   $('#vBaseLbl').textContent='Базовая';
   $('#vTopLbl').textContent='С верхним медиа';
@@ -716,19 +683,17 @@ function applyVisibility(){
     :'С верхним медиа: фон всегда белый, баннера 9:16 нет. Верхняя картинка или видео обязательны.';
   $('#bTop').hidden=base;
   $('#bBg').hidden=!base; $('#b916').hidden=!base;
-  $('#fSub').hidden=(st===1&&base);
-  const sub=$('#sub'); sub.dataset.max=st===1?44:34; sub.dispatchEvent(new Event('input'));
-  // подзаголовок — необязательная роль: тумблер. Этап 1: у базовой витрины роли нет
+  $('#fSub').hidden=false;
+  // подзаголовок — необязательная роль: тумблер
   $('#subWrap').hidden=!$('#subOn').checked;
   $$('input[name=topType]').forEach(r=>r.checked=r.value===S.topType);
   $('#topSizeChips').hidden=S.topType==='video';
-  // товарная
-  const pc=$('#ctProduct'), pi=pc.querySelector('input');
-  pi.disabled=st===1; pc.classList.toggle('dis',st===1);
-  pc.querySelectorAll('.soon').forEach(x=>x.remove());
-  if(st===1){pc.insertAdjacentHTML('beforeend',' <span class="soon">этап 2</span>'); if(S.ctype==='product'){setCtype('click',true);}}
+  // задача 1 — только Click out, выбора типа нет; задача 2 — появляется выбор типа с товарной карточкой
+  $('#fCtype').hidden=S.ver===1;
+  $('#fBtnText').hidden=!(S.ctype==='click'&&S.roles.cbtn);
+  if(S.ver===1&&S.ctype!=='click') setCtype('click',true);
   // фон
-  $$('#bgChips label').forEach(l=>{const i=l.querySelector('input'); const lock=S.on916&&i.value!=='white'; i.disabled=lock; l.classList.toggle('dis',lock);});
+  $$('#bgChips label').forEach(l=>{const i=l.querySelector('input'); const lock=S.on916&&i.value!=='white'; i.disabled=lock; l.classList.toggle('dis',lock); if(lock) l.dataset.tip='Недоступно: включён баннер 9:16 на первой позиции'; else delete l.dataset.tip;});
   if(S.on916) S.bg='white';
   $$('input[name=bg]').forEach(r=>r.checked=r.value===S.bg);
   $('#bgLock').hidden=!S.on916;
@@ -746,7 +711,8 @@ function renderRoles(){
     ?[tg('ctitle','Заголовок'),tg('cbtn','Кнопка')].join('')
     :[tg('disc','Скидка: лейбл и старая цена'),tg('rating','Рейтинг')].join('');
 }
-$('#cardRoles').addEventListener('change',e=>{const k=e.target.dataset.role; if(!k) return; S.roles[k]=e.target.checked; renderCards(); renderStyle(); render();});
+$('#cardRoles').addEventListener('change',e=>{const k=e.target.dataset.role; if(!k) return; S.roles[k]=e.target.checked; $('#fBtnText').hidden=!(S.ctype==='click'&&S.roles.cbtn); renderCards(); renderStyle(); render();});
+$('#btnText').addEventListener('input',e=>{S.btnText=e.target.value; $$('[data-btnmirror]').forEach(x=>x.value=S.btnText); render();});
 
 /* --- оформление: скругления и цвета --- */
 function isBase(){return S.variant==='base'}
@@ -774,10 +740,10 @@ function against(r){
   return undefined;
 }
 function renderStyle(){
-  $('#radii').innerHTML=RADII.map(r=>`<label for="rad_${r.k}">${r.nm}<input type="number" min="0" max="40" step="1" id="rad_${r.k}" data-rad="${r.k}" value="${S.radius[r.k]}"><span class="muted mono" style="font-size:11px">ДС: ${r.tok} = ${DS_RADIUS[r.k]}</span></label>`).join('');
+  $('#radii').innerHTML=RADII.map(r=>`<label for="rad_${r.k}">${r.nm}<input type="number" min="0" max="40" step="1" id="rad_${r.k}" data-rad="${r.k}" value="${S.radius[r.k]}"><span class="muted mono" style="font-size:11px">ДС: ${r.tok?r.tok+' = ':''}${DS_RADIUS[r.k]}</span></label>`).join('');
   $('#colors').innerHTML=colorRows().map(r=>`<div class="crow" data-row="${r.k}">
     <div class="nm">${r.nm}${r.on?`<small>${r.on}</small>`:''}</div>
-    <div class="ctl">${r.g==='btnbg'?Object.entries(BTN).map(([key,b])=>`<button type="button" class="mini" data-btn="${key}" aria-pressed="${S.btnStyle===key}"><i class="sw" style="background:${b.bg==='transparent'?'repeating-linear-gradient(45deg,#fff 0 3px,#ddd 3px 6px)':b.bg}"></i>${b.nm}</button>`).join(''):`<button type="button" class="mini" data-set="${r.k}" data-val="dark" title="Тёмный из ДС"><i class="sw" style="background:${DS_COLORS[r.k]}"></i></button><button type="button" class="mini" data-set="${r.k}" data-val="light" title="Светлый"><i class="sw" style="background:#FFFFFF"></i></button>`}
+    <div class="ctl">${r.g==='btnbg'?Object.entries(BTN).map(([key,b])=>`<button type="button" class="mini" data-btn="${key}" aria-pressed="${S.btnStyle===key}"><i class="sw" style="background:${b.bg==='transparent'?'repeating-linear-gradient(45deg,#fff 0 3px,#ddd 3px 6px)':b.bg}"></i>${b.nm}</button>`).join(''):`<button type="button" class="mini" data-set="${r.k}" data-val="dark" aria-label="Тёмный"><i class="sw" style="background:${DS_COLORS[r.k]}"></i></button><button type="button" class="mini" data-set="${r.k}" data-val="light" aria-label="Светлый"><i class="sw" style="background:#FFFFFF"></i></button>`}
       <input type="color" id="col_${r.k}" data-col="${r.k}" value="${S.colors[r.k]}" aria-label="${r.nm}: свой цвет">
       <span class="mono hex" style="font-size:11.5px">${S.colors[r.k].toUpperCase()}</span><span class="cr"></span></div></div>`).join('');
   updateContrast();
@@ -825,7 +791,7 @@ document.addEventListener('click',e=>{
 });
 
 /* radios */
-$$('input[name=stage]').forEach(r=>r.addEventListener('change',()=>{S.stage=+r.value; S.bgFile=null; applyVisibility(); renderCards(); render();}));
+$$('input[name=ver]').forEach(r=>r.addEventListener('change',()=>{S.ver=+r.value; if(S.ver===2) setCtype('product',true); applyVisibility(); renderCards(); render();}));
 $$('input[name=variant]').forEach(r=>r.addEventListener('change',()=>{S.variant=r.value; applyVisibility(); render();}));
 $$('input[name=topType]').forEach(r=>r.addEventListener('change',()=>{S.topType=r.value;S.topFile=null;applyVisibility();render();}));
 $$('input[name=topSize]').forEach(r=>r.addEventListener('change',()=>{S.topSize=r.value;S.topFile=null;renderUploads();render();}));
@@ -842,7 +808,8 @@ function setCtype(t,silent){
   if(t===S.ctype) return;
   S.saved[S.ctype]=S.cards;
   S.ctype=t; $$('input[name=ctype]').forEach(x=>x.checked=x.value===t);
-  S.cards=S.saved[t]||(t==='click'?[0,1].map(()=>({img:null,title:'',desc:'',btn:'',link:''})):[{q:''},{q:''}]);
+  S.cards=S.saved[t]||(t==='click'?[0,1].map(()=>({img:null,title:'',desc:'',link:''})):[{q:''},{q:''}]);
+  $('#fBtnText').hidden=!(S.ctype==='click'&&S.roles.cbtn);
   if(!silent){renderRoles();renderStyle();renderCards();render();}
 }
 /* закрываемая подсказка в «Оформлении» */
@@ -853,12 +820,15 @@ $('#closeAlert').addEventListener('click',()=>{$('#styleAlert').hidden=true; try
 function cardStatus(c){
   if(S.ctype==='product') return c.sku?'ok':'part';
   // включённая роль становится обязательной для всех карточек
-  return (c.img&&!c.imgErr&&c.desc&&c.link&&(!S.roles.ctitle||c.title)&&(!S.roles.cbtn||c.btn))?'ok':'part';
+  return (c.img&&!c.imgErr&&c.desc&&c.link&&(!S.roles.ctitle||c.title))?'ok':'part';
 }
 function renderCards(){
   const box=$('#cards'), n=S.cards.length;
   $('#cardCount').textContent=`${n} из ${LIM.max}`;
   $('#addCard').disabled=n>=LIM.max;
+  $('#limNote').textContent=n>LIM.rec
+    ?`Карточек уже ${n}. Рекомендуем не больше ${LIM.rec}: дальше ряд почти не долистывают, и последние карточки мало кто увидит.`
+    :`Можно до ${LIM.max} карточек, рекомендуем не больше ${LIM.rec}.`;
   box.innerHTML=S.cards.map((c,i)=>{
     const tools=`<div class="tools"><button type="button" class="ib" data-mv="${i},-1" ${i===0?'disabled':''} aria-label="Выше">↑</button><button type="button" class="ib" data-mv="${i},1" ${i===n-1?'disabled':''} aria-label="Ниже">↓</button><button type="button" class="ib" data-del="${i}" ${n<=LIM.min?'disabled':''} aria-label="Удалить">✕</button></div>`;
     if(S.ctype==='click'){
@@ -867,11 +837,11 @@ function renderCards(){
       <div class="up"><div class="drop">${imgInner}<input type="file" accept="image/*" data-cardfile="${i}" id="cf${i}" aria-label="Картинка карточки ${i+1}"></div>
         <div class="req-list"><span class="req" style="color:var(--ink);font-weight:500">Картинка 1:1</span><span>Загружать: <b class="mono">от 272×272</b> · JPG, PNG · до 2 МБ</span>${c.imgErr?`<span class="err">${esc(c.imgErr)}</span>`:''}<button type="button" class="demo" data-cdemo="${i}">${c.img?'Убрать':'Подставить пример'}</button></div></div>
       ${S.roles.ctitle||S.roles.cbtn?`<div class="row2">
-        ${S.roles.ctitle?`<div class="field"><label class="req" for="ct${i}">Заголовок</label><input type="text" id="ct${i}" data-k="title" data-i="${i}" data-max="14" value="${esc(c.title)}"><div class="hint"><span></span><span class="cnt"></span></div></div>`:''}
-        ${S.roles.cbtn?`<div class="field"><label class="req" for="cb${i}">Текст кнопки</label><input type="text" id="cb${i}" data-k="btn" data-i="${i}" data-max="10" value="${esc(c.btn)}"><div class="hint"><span></span><span class="cnt"></span></div></div>`:''}
+        ${S.roles.ctitle?`<div class="field"><label class="req" for="ct${i}">Заголовок</label><input type="text" id="ct${i}" data-k="title" data-i="${i}" data-max="14" placeholder="Введите заголовок" value="${esc(c.title)}"><div class="hint"><span></span><span class="cnt"></span></div></div>`:''}
+        ${S.roles.cbtn?`<div class="field"><label for="cb${i}">Текст кнопки</label><input type="text" id="cb${i}" data-btnmirror value="${esc(S.btnText)}" placeholder="Общий для всех карточек" disabled><div class="hint"><span></span></div></div>`:''}
       </div>`:''}
-      <div class="field"><label class="req" for="cd${i}">Описание</label><input type="text" id="cd${i}" data-k="desc" data-i="${i}" data-max="33" value="${esc(c.desc)}"><div class="hint"><span>До 2 строк</span><span class="cnt"></span></div></div>
-      <div class="field"><label class="req" for="cl${i}">Ссылка</label><input type="url" id="cl${i}" data-k="link" data-i="${i}" placeholder="https://" value="${esc(c.link)}"></div>
+      <div class="field"><label class="req" for="cd${i}">Описание</label><input type="text" id="cd${i}" data-k="desc" data-i="${i}" data-max="33" placeholder="Введите описание" value="${esc(c.desc)}"><div class="hint"><span>До 2 строк</span><span class="cnt"></span></div></div>
+      <div class="field"><label class="req" for="cl${i}">Ссылка</label><input type="url" id="cl${i}" data-k="link" data-i="${i}" placeholder="Введите ссылку" value="${esc(c.link)}"></div>
       </div>`;
     }
     const p=c.sku&&CATALOG.find(x=>x.sku===c.sku);
@@ -903,7 +873,7 @@ $('#cards').addEventListener('click',e=>{
   else return;
   renderCards(); render();
 });
-$('#addCard').addEventListener('click',()=>{S.cards.push(S.ctype==='click'?{img:null,title:'',desc:'',btn:'',link:''}:{q:''}); renderCards(); render();});
+$('#addCard').addEventListener('click',()=>{S.cards.push(S.ctype==='click'?{img:null,title:'',desc:'',link:''}:{q:''}); renderCards(); render();});
 
 /* validity */
 function problems(){
@@ -914,6 +884,7 @@ function problems(){
   if(S.variant==='top'&&(!S.topFile||S.topFile.err)) p.push('верхнее медиа');
   if(S.variant==='base'&&S.bg==='image'&&(!S.bgFile||S.bgFile.err)) p.push('картинка фона');
   if(S.variant==='base'&&S.on916&&(!S.file916||S.file916.err||!v('#link916'))) p.push('баннер 9:16');
+  if(S.ctype==='click'&&S.roles.cbtn&&!S.btnText.trim()) p.push('текст кнопки');
   const bad=S.cards.filter(c=>cardStatus(c)!=='ok').length;
   if(bad) p.push(`карточки (${bad})`);
   return p;
@@ -928,49 +899,51 @@ function mediaBox(f,style,cls='ph dark'){
   return `<div style="${style};overflow:hidden">${f.video?`<video src="${f.url}" muted autoplay loop playsinline style="width:100%;height:100%;object-fit:cover"></video>`:`<img src="${f.url}" alt="" style="width:100%;height:100%;object-fit:cover;display:block">`}</div>`;
 }
 function render(){
-  const base=S.variant==='base', k=320/360;
-  const title=$('#title').value||'Заголовок витрины';
-  const showSub=!$('#fSub').hidden&&!$('#subWrap').hidden&&$('#sub').value.trim();
-  // плашка «Реклама»: с верхним медиа — на картинке; базовая этап 1 — под заголовком; базовая этап 2 — над заголовком
-  const adAbove=base&&S.stage===2, adBelow=base&&S.stage===1;
+  const base=S.variant==='base';
+  const ph=t=>t;
+  const title=$('#title').value.trim(), subOn=!$('#fSub').hidden&&$('#subOn').checked, sub=$('#sub').value.trim();
   let bgStyle='', bgLayer='';
   if(base&&S.bg==='color') bgStyle=`background:${$('#bgColor').value}`;
   if(base&&S.bg==='image'){ const b=S.bgFile; if(b&&b.color) bgLayer=`<div class="bgimg" style="background:${b.color}"></div>`; else if(b&&b.url) bgLayer=`<div class="bgimg"><img src="${b.url}" alt="" style="width:100%;height:100%;object-fit:cover;object-position:top center;display:block"></div>`; else bgLayer='<div class="bgimg ph"></div>'; }
   const C=S.colors, R=S.radius, markOn=$('#markOn').checked;
-  const col=k=>`color:${C[k]}`;
-  const rMedia=`border-radius:${Math.round(R.media*k)}px`, bs=BTN[S.btnStyle], rBtn=`border-radius:${Math.round(R.btn*k)}px;background:${BTN[S.btnStyle]&&BTN[S.btnStyle].bg==='transparent'?'transparent':C.btnBg};color:${C.btnText};border-color:${bs&&bs.border?bs.border:'transparent'}`;
-  updateContrast();
-  let top='';
-  if(!base){const h=S.topType==='video'?203:+S.topSize; top=`<div class="topmedia">${mediaBox(S.topFile,`height:${Math.round(h*k)}px`)}${markOn?'<span class="adlbl">Реклама</span>':''}</div>`;}
-  let row='';
-  if(base&&S.on916){row+=`<div class="v916" style="${rMedia}">${mediaBox(S.file916,'width:100%;height:100%')}</div>`;}
+  const col=(k,nm)=>`style="color:${C[k]}"`;
   // белая подложка карточек обязательна при фоне «Цвет» или «Картинка»; при белом фоне, баннере 9:16 и в витрине с верхним медиа — без подложки
   const white=cardsOnWhite();
-  const wb=white?' wb':'', wbStyle=white?`style="border-radius:${Math.round((R.media+4)*k)}px"`:'';
+  // подложка: скругление карточки; картинка внутри с отступом 8 → её скругление на 8 меньше
+  // с подложкой картинка на 8 меньше скругления подложки; без подложки — скругление картинки = значению «Карточка»
+  const rCard=`border-radius:${R.media}px`, rMedia=`border-radius:${white?Math.max(0,R.media-8):R.media}px`;
+  const bs=BTN[S.btnStyle], rBtn=`border-radius:${R.btn}px;background:${bs&&bs.bg==='transparent'?'transparent':C.btnBg};color:${C.btnText};border-color:${bs&&bs.border?bs.border:'transparent'}`;
+  updateContrast();
+  let top='';
+  if(!base){const h=S.topType==='video'?203:+S.topSize; top=`<div class="topmedia">${mediaBox(S.topFile,`height:${h}px`)}${markOn?'<span class="adlbl">Реклама</span>':''}</div>`;}
+  let row='';
+  if(base&&S.on916){row+=`<div class="v916"><div class="vm" style="${rCard}">${mediaBox(S.file916,'width:100%;height:100%')}${markOn?'<span class="adp">Реклама</span>':''}</div></div>`;}
+  const wb=white?' wb':'', wbStyle=white?`style="${rCard}"`:'';
   $('#cbgNote').textContent=white
-    ?'Фон витрины цветной или картинка, поэтому у карточек белая подложка. Это обязательно и не настраивается.'
+    ?(S.bg==='color'?'Фон витрины цветной, поэтому у карточек белая подложка. Это обязательно и не настраивается.':'Фон витрины — картинка, поэтому у карточек белая подложка. Это обязательно и не настраивается.')
     :(base&&S.on916?'Первым стоит баннер 9:16, фон белый, поэтому карточки без подложки.':base?'Фон витрины белый, поэтому карточки без подложки.':'У витрины с верхним медиа фон белый, поэтому карточки без подложки.');
   S.cards.forEach(c=>{
     if(S.ctype==='click'){
       const m=c.img?(c.img.startsWith('#')?`<div class="m" style="background:${c.img};${rMedia}"></div>`:`<div class="m" style="${rMedia}"><img src="${c.img}" alt=""></div>`):`<div class="m ph" style="${rMedia}"></div>`;
-      const ttl=S.roles.ctitle?`<div class="ct" style="${col('ctitle')}">${esc(c.title)||'<span style="opacity:.5">Заголовок</span>'}</div>`:'';
-      const btn=S.roles.cbtn?`<div class="cb" style="${rBtn}">${esc(c.btn)||'<span style="opacity:.5">Кнопка</span>'}</div>`:'';
-      row+=`<div class="pc${wb}" ${wbStyle}>${m}${ttl}<div class="cd" style="${col('cdesc')}">${esc(c.desc)||'<span style="opacity:.5">Описание карточки</span>'}</div>${btn}</div>`;
+      const ttl=S.roles.ctitle?`<div class="ct" ${col('ctitle','Заголовок карточки')}>${esc(c.title)||ph('Заголовок')}</div>`:'';
+      const btn=S.roles.cbtn?`<div class="bt"><div class="cb" style="${rBtn}">${esc(S.btnText)||ph('Кнопка')}</div></div>`:'';
+      row+=`<div class="pc${wb}" ${wbStyle}>${m}<div class="tx">${ttl}<div class="cd" ${col('cdesc','Описание карточки')}>${esc(c.desc)||ph('Описание карточки')}</div></div>${btn}</div>`;
     }else{
       const p=c.sku&&CATALOG.find(x=>x.sku===c.sku);
-      if(!p){row+=`<div class="pc${wb}" ${wbStyle}><div class="m ph" style="${rMedia}"></div><div class="cd" style="opacity:.5">Выберите товар</div></div>`;return;}
+      if(!p){row+=`<div class="pc${wb}" ${wbStyle}><div class="m ph" style="${rMedia}"></div><div class="tx"><div class="cd">${ph('Выберите товар')}</div></div></div>`;return;}
       if(p.stock===false) return;
       const anyNoRating=S.cards.some(cc=>{const pp=cc.sku&&CATALOG.find(x=>x.sku===cc.sku);return pp&&pp.stock!==false&&!pp.rating;});
       const showRt=S.roles.rating&&!anyNoRating&&p.rating, disc=S.roles.disc;
       row+=`<div class="pc${wb}" ${wbStyle}><div class="m" style="background:hsl(${p.hue} 35% 82%);${rMedia}">${disc&&p.label?`<span class="lab">${p.label}</span>`:''}</div>
-        <div class="price" style="${col('price')}">${p.price} ₽ ${disc&&p.old?`<s>${p.old} ₽</s><em>${p.disc}</em>`:''}</div>
-        <div class="cd" style="${col('cdesc')}">${esc(p.name)}</div>${showRt?`<div class="rt">★ ${p.rating} · ${p.rev} отзывов</div>`:''}<div class="cb" style="${rBtn}">В корзину</div></div>`;
+        <div class="tx"><div class="price" ${col('price','Цена')}>${p.price} ₽ ${disc&&p.old?`<s>${p.old} ₽</s><em>${p.disc}</em>`:''}</div>
+        <div class="cd" ${col('cdesc','Название товара')}>${esc(p.name)}</div>${showRt?`<div class="rt">★ ${p.rating} · ${p.rev} отзывов</div>`:''}</div><div class="bt"><div class="cb" style="${rBtn}">В корзину</div></div></div>`;
     }
   });
-  row+=`<div class="more"><i>→</i>Смотреть все</div>`;
+  row+=`<div class="more"><div><i><svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M1 6h13M9.5 1.5 14 6l-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></i>Смотреть все</div></div>`;
+  const chev='<svg viewBox="0 0 24 24" fill="none"><path d="M10 6.5 15.5 12 10 17.5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
   $('#phone').innerHTML=`<div class="bar"></div><div class="ghost"></div><div class="ghost s"></div>
-    <div class="shelf" style="${bgStyle};border-radius:${Math.round(R.shelf*k)}px">${bgLayer}${top}
-      <div class="sh-head">${markOn&&adAbove?`<span class="ad" style="${col('mark')}">Реклама</span>`:''}<div class="r1"><span class="t" style="${col('title')}">${esc(title)}</span><span class="all" style="${col('all')}">Все ›</span></div>${showSub?`<span class="st" style="${col('sub')}">${esc($('#sub').value)}</span>`:''}${markOn&&adBelow?`<span class="ad" style="${col('mark')}">Реклама ⓘ</span>`:''}</div>
+    <div class="shelf${white?'':' nb'}" style="${bgStyle};border-radius:${R.shelf}px">${bgLayer}${top}
+      <div class="sh-head">${markOn&&base?`<span class="ad" ${col('mark','Маркировка «Реклама»')}>Реклама</span>`:''}<div class="tt"><div class="r1"><span class="t" ${col('title','Заголовок витрины')}>${title?esc(title):ph('Заголовок витрины')}</span><span class="all" ${col('all','Кнопка «Все»')}>Все${chev}</span></div>${subOn?`<span class="st" ${col('sub','Подзаголовок витрины')}>${sub?esc(sub):ph('Подзаголовок')}</span>`:''}</div></div>
       <div class="sh-row">${row}</div>
     </div><div class="ghost s"></div><div class="ghost"></div>`;
   const pr=problems(); $('#pub').disabled=pr.length>0;
@@ -980,6 +953,31 @@ function render(){
 }
 $('#f').addEventListener('submit',e=>{e.preventDefault(); $('#toast').textContent='Креатив опубликован (прототип)'; $('#toast').style.color='var(--ok)';});
 $('#draft').addEventListener('click',()=>{$('#toast').textContent='Черновик сохранён'; $('#toast').style.color='var(--ok)';});
+
+
+/* тестовые данные — только для визуализации */
+function setVal(sel,v){$(sel).value=v; $(sel).dispatchEvent(new Event('input'));}
+$('#fillDemo').addEventListener('click',()=>{
+  setVal('#cname','Витрина «Молочные новинки» — октябрь');
+  setVal('#title','Молочные новинки'); $('#subOn').checked=true; setVal('#sub','Попробуйте раньше всех');
+  setVal('#link','https://magnit.ru/promo/moloko-novinki');
+  if(!S.on916&&S.variant==='base'){S.bg='color'; $('#bgColor').value='#D0EAAE'; $('#bgHex').textContent='#D0EAAE';}
+  S.btnText='Купить'; setVal('#btnText','Купить');
+  const click=[
+    {img:DEMO_COLORS[0],title:'Актибио',desc:'Новый вкус — манго и маракуйя',link:'https://magnit.ru/p/1'},
+    {img:DEMO_COLORS[1],title:'Простоквашино',desc:'Молоко с фермы рядом',link:'https://magnit.ru/p/2'},
+    {img:DEMO_COLORS[2],title:'Савушкин',desc:'Творог для завтрака',link:'https://magnit.ru/p/3'}];
+  const prod=[{sku:'1000234567'},{sku:'1000456789'},{sku:'1000345678'}];
+  S.saved={click,product:prod}; S.cards=S.ctype==='click'?click:prod;
+  applyVisibility(); renderCards(); render();
+});
+$('#clearAll').addEventListener('click',()=>{
+  ['#cname','#title','#sub','#link','#link916','#btnText'].forEach(s=>setVal(s,''));
+  S.btnText=''; S.bg='white'; S.bgFile=null; S.topFile=null; S.file916=null;
+  S.saved={click:[{img:null,title:'',desc:'',link:''},{img:null,title:'',desc:'',link:''}],product:[{q:''},{q:''}]};
+  S.cards=S.saved[S.ctype];
+  applyVisibility(); renderCards(); render();
+});
 
 applyVisibility(); renderCards(); render();
 })();
